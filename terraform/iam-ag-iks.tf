@@ -35,3 +35,14 @@ resource "ibm_iam_access_group_policy" "policy-k8s-identity-administrator" {
     service = "iam-identity"
   }
 }
+
+# Assign Administrator platform access role to enable the creation of COS bucket
+resource "ibm_iam_access_group_policy" "policy-cos-administrator" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Reader", "Writer", "Manager", "Content Reader", "Object Reader", "Object Writer", "Backup Manager", "Backup Reader", "Key Manager", "Service Configuration Reader", "Administrator", "Editor", "Operator", "Viewer"]
+
+  resources {
+    service           = "cloud-object-storage"
+    resource_group_id = ibm_resource_group.group.id
+  }
+}
