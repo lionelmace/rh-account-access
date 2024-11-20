@@ -14,6 +14,7 @@ resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
   }
 }
 
+# Service: Kubernetes Service
 # Create a policy to all Kubernetes/OpenShift clusters within the Resource Group
 resource "ibm_iam_access_group_policy" "policy-k8s" {
   access_group_id = ibm_iam_access_group.accgrp.id
@@ -24,6 +25,21 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
     resource_group_id = ibm_resource_group.group.id
   }
 }
+
+# Service: Kubernetes Service
+# Role Viewer is required to be able to select Cloud Pak license during cluster creation
+# Platform Roles: Viewer with No Resource Group.
+resource "ibm_iam_access_group_policy" "ag-policy-ks-license" {
+  for_each        = var.users
+  access_group_id = ibm_iam_access_group.accgrp.id
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = "containers-kubernetes"
+  }
+  roles = ["Viewer"]
+}
+
 
 # Assign Administrator platform access role to enable the creation of API Key
 # Pre-Req to provision IKS/ROKS clusters within a Resource Group
