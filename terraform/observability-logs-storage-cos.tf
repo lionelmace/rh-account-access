@@ -41,7 +41,7 @@ resource "ibm_resource_instance" "cos-logs" {
 ## COS Data Bucket
 ##############################################################################
 resource "ibm_cos_bucket" "logs-bucket-data" {
-  bucket_name          = format("%s-%s", local.basename, "bucket-data-${random_string.random.0.result}")
+  bucket_name          = format("%s-%s", local.basename, "bucket-data")
   resource_instance_id = ibm_resource_instance.cos-logs.id
   storage_class        = "smart"
 
@@ -60,7 +60,7 @@ resource "ibm_cos_bucket" "logs-bucket-data" {
 ## COS Metrics Bucket
 ##############################################################################
 resource "ibm_cos_bucket" "logs-bucket-metrics" {
-  bucket_name          = format("%s-%s", local.basename, "bucket-metrics-${random_string.random.0.result}")
+  bucket_name          = format("%s-%s", local.basename, "bucket-metrics")
   resource_instance_id = ibm_resource_instance.cos-logs.id
   storage_class        = "smart"
 

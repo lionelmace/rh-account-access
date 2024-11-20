@@ -11,7 +11,7 @@ variable "ibmcloud_api_key" {
 
 variable "prefix" {
   type        = string
-  default     = "rh"
+  default     = ""
   description = "A prefix for all resources to be created. If none provided a random prefix will be created"
 }
 
@@ -23,7 +23,7 @@ resource "random_string" "random" {
 }
 
 locals {
-  basename = lower(var.prefix == "" ? "icn-${random_string.random.0.result}" : var.prefix)
+  basename = lower(var.prefix == "" ? "rh-${random_string.random.0.result}" : var.prefix)
 }
 
 variable "region" {
