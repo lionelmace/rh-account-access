@@ -5,7 +5,7 @@
 resource "ibm_atracker_route" "atracker_route_de" {
   name = format("%s-%s", local.basename, "at-route")
   rules {
-    target_ids = [ibm_atracker_target.at_logs_target.id, ibm_atracker_target.at_mezmo_target.id]
+    target_ids = [ibm_atracker_target.at_logs_target.id]
     locations  = [var.region, "global"]
   }
   lifecycle {
@@ -23,18 +23,6 @@ resource "ibm_atracker_target" "at_logs_target" {
   target_type = "cloud_logs"
   region      = var.region
 }
-
-# Activity Tracker (Mezmo) Target
-resource "ibm_atracker_target" "at_mezmo_target" {
-  logdna_endpoint {
-    target_crn    = local.activity_tracker_id
-    ingestion_key = ibm_resource_key.at_key.credentials.ingestion_key
-  }
-  name        = format("%s-%s", local.basename, "at-target-mezmo")
-  target_type = "logdna"
-  region      = var.region
-}
-
 
 resource "ibm_atracker_settings" "atracker_settings" {
   default_targets           = [ibm_atracker_target.at_logs_target.id]
