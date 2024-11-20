@@ -43,31 +43,31 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
 
 ##############################################################################
 
-resource "ibm_is_security_group" "kube-master-outbound" {
-  name           = format("%s-%s", local.basename, "kube-master-outbound")
-  vpc            = ibm_is_vpc.vpc.id
-  resource_group = ibm_resource_group.group.id
-  tags           = var.tags
-}
+# resource "ibm_is_security_group" "kube-master-outbound" {
+#   name           = format("%s-%s", local.basename, "kube-master-outbound")
+#   vpc            = ibm_is_vpc.vpc.id
+#   resource_group = ibm_resource_group.group.id
+#   tags           = var.tags
+# }
 
-resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
-  group     = ibm_is_security_group.kube-master-outbound.id
-  direction = "outbound"
-  remote    = "0.0.0.0/0"
-  tcp {
-    port_min = 30000
-    port_max = 32767
-  }
-}
-resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
-  group     = ibm_is_security_group.kube-master-outbound.id
-  direction = "outbound"
-  remote    = "0.0.0.0/0"
-  udp {
-    port_min = 30000
-    port_max = 32767
-  }
-}
+# resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
+#   group     = ibm_is_security_group.kube-master-outbound.id
+#   direction = "outbound"
+#   remote    = "0.0.0.0/0"
+#   tcp {
+#     port_min = 30000
+#     port_max = 32767
+#   }
+# }
+# resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
+#   group     = ibm_is_security_group.kube-master-outbound.id
+#   direction = "outbound"
+#   remote    = "0.0.0.0/0"
+#   udp {
+#     port_min = 30000
+#     port_max = 32767
+#   }
+# }
 
 ##############################################################################
 # New Outbound security group rules to add for version 4.14 or later
@@ -99,20 +99,4 @@ resource "ibm_is_security_group_rule" "sg-rule-outbound-addprefix-4443" {
     port_min = 4443
     port_max = 4443
   }
-}
-
-# New custom Security Group for VPC LB
-# Usecase: allow IP filtering
-##############################################################################
-resource "ibm_is_security_group" "custom-sg-for-lb" {
-  name           = format("%s-%s", local.basename, "custom-sg-for-lb")
-  vpc            = ibm_is_vpc.vpc.id
-  resource_group = ibm_resource_group.group.id
-  tags           = var.tags
-}
-
-resource "ibm_is_security_group_rule" "sg-rule-inbound-home" {
-  group     = ibm_is_security_group.custom-sg-for-lb.id
-  direction = "inbound"
-  remote    = "2.15.18.161"
 }
