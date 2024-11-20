@@ -30,7 +30,6 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
 # Role Viewer is required to be able to select Cloud Pak license during cluster creation
 # Platform Roles: Viewer with No Resource Group.
 resource "ibm_iam_access_group_policy" "ag-policy-ks-license" {
-  for_each        = var.users
   access_group_id = ibm_iam_access_group.accgrp.id
   resource_attributes {
     name     = "serviceName"
