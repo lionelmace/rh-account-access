@@ -51,7 +51,7 @@ locals {
 # Replace role Editor by Operator to prevent users from creating
 # VPC/Subnet networks
 resource "ibm_iam_access_group_policy" "policy_vpc" {
-  access_group_id = ibm_iam_access_group.accgrp.id
+  access_group_id = ibm_iam_access_group.ag-vpc.id
   roles           = ["Operator"]
 
   for_each = local.is_network_service_types
@@ -80,7 +80,7 @@ resource "ibm_iam_access_group_policy" "policy_vpc" {
 # Editor role is required to create a VSI or Block Storage.
 # Viewer/Operator can only list VSI.
 resource "ibm_iam_access_group_policy" "policy_vsi" {
-  access_group_id = ibm_iam_access_group.accgrp.id
+  access_group_id = ibm_iam_access_group.ag-vpc.id
   roles           = ["Operator"]
 
   for_each = local.is_instance_service_types
