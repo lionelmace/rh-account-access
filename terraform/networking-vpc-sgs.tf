@@ -43,31 +43,31 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
 
 ##############################################################################
 
-# resource "ibm_is_security_group" "kube-master-outbound" {
-#   name           = format("%s-%s", local.basename, "kube-master-outbound")
-#   vpc            = ibm_is_vpc.vpc.id
-#   resource_group = ibm_resource_group.group.id
-#   tags           = var.tags
-# }
+resource "ibm_is_security_group" "kube-master-outbound" {
+  name           = format("%s-%s", local.basename, "kube-master-outbound")
+  vpc            = ibm_is_vpc.vpc.id
+  resource_group = ibm_resource_group.group.id
+  tags           = var.tags
+}
 
-# resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
-#   group     = ibm_is_security_group.kube-master-outbound.id
-#   direction = "outbound"
-#   remote    = "0.0.0.0/0"
-#   tcp {
-#     port_min = 30000
-#     port_max = 32767
-#   }
-# }
-# resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
-#   group     = ibm_is_security_group.kube-master-outbound.id
-#   direction = "outbound"
-#   remote    = "0.0.0.0/0"
-#   udp {
-#     port_min = 30000
-#     port_max = 32767
-#   }
-# }
+resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
+  group     = ibm_is_security_group.kube-master-outbound.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+  tcp {
+    port_min = 30000
+    port_max = 32767
+  }
+}
+resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
+  group     = ibm_is_security_group.kube-master-outbound.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+  udp {
+    port_min = 30000
+    port_max = 32767
+  }
+}
 
 ##############################################################################
 # New Outbound security group rules to add for version 4.14 or later
