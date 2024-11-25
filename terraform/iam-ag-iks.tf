@@ -61,3 +61,18 @@ resource "ibm_iam_access_group_policy" "policy-cos-administrator" {
     resource_group_id = ibm_resource_group.group.id
   }
 }
+
+# Service: Container Registry
+# Role Administrator is required to pull images from ICR at cluster creation time.
+# Do not limit policies for IBM Cloud Container Registry to the resource group level.
+# Platform Roles: Administrator
+# Source: https://cloud.ibm.com/docs/openshift?topic=openshift-iam-platform-access-roles
+resource "ibm_iam_access_group_policy" "ag-policy-icr-admin" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = "container-registry"
+  }
+  roles = ["Reader", "Administrator"]
+}
