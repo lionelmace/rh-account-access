@@ -1,4 +1,4 @@
-# rh-account-access
+# Red Hat - Access to IBM Cloud account
 
 Access IBM Cloud Account
 
