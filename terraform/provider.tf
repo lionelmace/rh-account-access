@@ -7,11 +7,7 @@ terraform {
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
-      version = "1.71.1"
-    }
-    logdna = {
-      source  = "logdna/logdna"
-      version = ">= 1.16.0"
+      version = "1.71.3"
     }
     http-full = {
       source  = "salrashid123/http-full"
