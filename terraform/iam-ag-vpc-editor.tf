@@ -6,7 +6,7 @@ resource "ibm_iam_access_group" "ag-vpc-editor" {
 }
 
 # Visibility on the Resource Group
-resource "ibm_iam_access_group_policy" "policy_rg_viewer" {
+resource "ibm_iam_access_group_policy" "policy_rg_viewer_editor" {
   access_group_id = ibm_iam_access_group.ag-vpc-editor.id
   roles           = ["Viewer"]
   resources {
