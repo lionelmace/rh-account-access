@@ -6,7 +6,7 @@ resource "ibm_iam_access_group" "ag-vpc-operator" {
 }
 
 # Visibility on the Resource Group
-resource "ibm_iam_access_group_policy" "application1_policy" {
+resource "ibm_iam_access_group_policy" "policy_rg_viewer" {
   access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Viewer"]
   resources {
@@ -50,7 +50,7 @@ locals {
 # to select a VPC while creating a VSI.
 # Use role Operator to prevent users from creating VPC/Subnet networks
 # Use role Editor to enable users to create VPC/Subnet networks
-resource "ibm_iam_access_group_policy" "policy_vpc" {
+resource "ibm_iam_access_group_policy" "policy_vpc_operator" {
   access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Operator"]
 
@@ -79,7 +79,7 @@ resource "ibm_iam_access_group_policy" "policy_vpc" {
 
 # Editor role is required to create a VSI or Block Storage.
 # Viewer/Operator can only list VSI.
-resource "ibm_iam_access_group_policy" "policy_vsi" {
+resource "ibm_iam_access_group_policy" "policy_vsi_operator" {
   access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Operator"]
 

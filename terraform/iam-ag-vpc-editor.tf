@@ -6,7 +6,7 @@ resource "ibm_iam_access_group" "ag-vpc-editor" {
 }
 
 # Visibility on the Resource Group
-resource "ibm_iam_access_group_policy" "application1_policy" {
+resource "ibm_iam_access_group_policy" "policy_rg_viewer" {
   access_group_id = ibm_iam_access_group.ag-vpc-editor.id
   roles           = ["Viewer"]
   resources {
@@ -15,42 +15,11 @@ resource "ibm_iam_access_group_policy" "application1_policy" {
   }
 }
 
-# ------------------------------------------------------------
-# VPC Infrastructure (is) resources (i.e. vpc)
-# List of Resource Attributes:
-# https://cloud.ibm.com/docs/vpc?topic=vpc-resource-attributes
-# All IAM roles and actions
-# https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions
-# -------------------------------------------------------------
-locals {
-  # types of resources that both the network team
-  is_network_service_types = {
-    "vpcId"           = "*"
-    "subnetId"        = "*"
-    "securityGroupId" = "*"
-    "networkAclId"    = "*"
-    "loadBalancerId"  = "*" # not used, included for completeness
-    "publicGatewayId"    = "*" # not used, included for completeness
-    "flowLogCollectorId" = "*" # not used, included for completeness
-    "vpnGatewayId"       = "*" # not used, included for completeness
-  }
-  # Types of resources required to be able to create a VSI
-  is_instance_service_types = {
-    "imageId"      = "*"
-    "instanceId"   = "*"
-    "floatingIpId" = "*"
-    "keyId"        = "*"
-    "volumeId"     = "*"
-    "instanceGroupId" = "*" # not used, included for completeness
-    "dedicatedHostId" = "*" # not used, included for completeness
-  }
-}
-
 # Operator role is required on VPC/Subnet to be able 
 # to select a VPC while creating a VSI.
 # Use role Operator to prevent users from creating VPC/Subnet networks
 # Use role Editor to enable users to create VPC/Subnet networks
-resource "ibm_iam_access_group_policy" "policy_vpc" {
+resource "ibm_iam_access_group_policy" "policy_vpc_editor" {
   access_group_id = ibm_iam_access_group.ag-vpc-editor.id
   roles           = ["Editor"]
 
@@ -79,7 +48,7 @@ resource "ibm_iam_access_group_policy" "policy_vpc" {
 
 # Editor role is required to create a VSI or Block Storage.
 # Viewer/Operator can only list VSI.
-resource "ibm_iam_access_group_policy" "policy_vsi" {
+resource "ibm_iam_access_group_policy" "policy_vsi_editor" {
   access_group_id = ibm_iam_access_group.ag-vpc-editor.id
   roles           = ["Editor"]
 
