@@ -26,7 +26,7 @@ locals {
   # types of resources that both the network team
   is_network_service_types = {
     "vpcId"           = "*"
-    "subnetId"        = "*"
+    # "subnetId"        = "*"
     "securityGroupId" = "*"
     "networkAclId"    = "*"
     "loadBalancerId"  = "*" # not used, included for completeness
