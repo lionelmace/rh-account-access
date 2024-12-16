@@ -26,7 +26,6 @@ locals {
   # types of resources that both the network team
   is_network_service_types = {
     "vpcId"           = "*"
-    "subnetId"        = "*"
     "securityGroupId" = "*"
     "networkAclId"    = "*"
     "loadBalancerId"  = "*" # not used, included for completeness
@@ -38,6 +37,7 @@ locals {
   is_instance_service_types = {
     "imageId"      = "*"
     "instanceId"   = "*"
+    "subnetId"     = "*"
     "floatingIpId" = "*"
     "keyId"        = "*"
     "volumeId"     = "*"
