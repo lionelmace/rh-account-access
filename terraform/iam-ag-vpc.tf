@@ -41,6 +41,7 @@ locals {
     "floatingIpId" = "*"
     "keyId"        = "*"
     "volumeId"     = "*"
+    "virtualNetworkInterfaceId" = "*"
     "instanceGroupId" = "*" # not used, included for completeness
     "dedicatedHostId" = "*" # not used, included for completeness
   }
