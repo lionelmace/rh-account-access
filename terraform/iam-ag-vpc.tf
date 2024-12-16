@@ -38,6 +38,7 @@ locals {
   is_instance_service_types = {
     "imageId"      = "*"
     "instanceId"   = "*"
+    "subnetId"     = "*"
     "floatingIpId" = "*"
     "keyId"        = "*"
     "volumeId"     = "*"
