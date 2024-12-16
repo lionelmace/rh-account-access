@@ -1,13 +1,13 @@
 
 # Name of the Access Group
-resource "ibm_iam_access_group" "ag-vpc" {
-  name = format("%s-%s", local.basename, "ag-vpc")
+resource "ibm_iam_access_group" "ag-vpc-operator" {
+  name = format("%s-%s", local.basename, "ag-vpc-operator")
   tags = var.tags
 }
 
 # Visibility on the Resource Group
 resource "ibm_iam_access_group_policy" "application1_policy" {
-  access_group_id = ibm_iam_access_group.ag-vpc.id
+  access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Viewer"]
   resources {
     resource_type = "resource-group"
@@ -48,10 +48,10 @@ locals {
 
 # Operator role is required on VPC/Subnet to be able 
 # to select a VPC while creating a VSI.
-# Replace role Editor by Operator to prevent users from creating
-# VPC/Subnet networks
+# Use role Operator to prevent users from creating VPC/Subnet networks
+# Use role Editor to enable users to create VPC/Subnet networks
 resource "ibm_iam_access_group_policy" "policy_vpc" {
-  access_group_id = ibm_iam_access_group.ag-vpc.id
+  access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Operator"]
 
   for_each = local.is_network_service_types
@@ -80,7 +80,7 @@ resource "ibm_iam_access_group_policy" "policy_vpc" {
 # Editor role is required to create a VSI or Block Storage.
 # Viewer/Operator can only list VSI.
 resource "ibm_iam_access_group_policy" "policy_vsi" {
-  access_group_id = ibm_iam_access_group.ag-vpc.id
+  access_group_id = ibm_iam_access_group.ag-vpc-operator.id
   roles           = ["Operator"]
 
   for_each = local.is_instance_service_types
