@@ -81,7 +81,7 @@ resource "ibm_iam_access_group_policy" "policy_vpc_operator" {
 # Viewer/Operator can only list VSI.
 resource "ibm_iam_access_group_policy" "policy_vsi_operator" {
   access_group_id = ibm_iam_access_group.ag-vpc-operator.id
-  roles           = ["Operator"]
+  roles           = ["Editor"]
 
   for_each = local.is_instance_service_types
   resource_attributes {
