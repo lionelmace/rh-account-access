@@ -114,14 +114,14 @@ resource "ibm_iam_access_group_policy" "policy_vsi_console" {
   roles           = ["Console Administrator"]
 
   resource_attributes {
-    name     = "serviceName"
-    operator = "stringEquals"
-    value    = "is"
-  }
-  resource_attributes {
     name     = "instanceId"
     operator = "stringEquals"
     value    = "*"
+  }
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = "is"
   }
   resource_attributes {
     name     = "resourceGroupId"
