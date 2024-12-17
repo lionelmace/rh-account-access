@@ -119,9 +119,9 @@ resource "ibm_iam_access_group_policy" "policy_vsi_console" {
     value    = "is"
   }
   resource_attributes {
-    name     = "serviceName"
+    name     = "instanceId"
     operator = "stringEquals"
-    value    = "instanceId"
+    value    = "*"
   }
   resource_attributes {
     name     = "resourceGroupId"
