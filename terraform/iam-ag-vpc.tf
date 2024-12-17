@@ -106,5 +106,31 @@ resource "ibm_iam_access_group_policy" "policy_vsi" {
     operator = "stringEquals"
     value    = "eu-de"
   }
+}
 
+# Console Administrator
+resource "ibm_iam_access_group_policy" "policy_vsi_console" {
+  access_group_id = ibm_iam_access_group.ag-vpc.id
+  roles           = ["Console Administrator"]
+
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = "is"
+  }
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = "instanceId"
+  }
+  resource_attributes {
+    name     = "resourceGroupId"
+    operator = "stringEquals"
+    value    = ibm_resource_group.group.id
+  }
+  resource_attributes {
+    name     = "region"
+    operator = "stringEquals"
+    value    = "eu-de"
+  }
 }
